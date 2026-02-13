@@ -38,6 +38,29 @@ AI Agents can leverage tools to complete complex tasks, retrieve information, or
 - **Customer Support:** Agents can interact with CRM systems, ticketing platforms, or knowledge bases to resolve user queries.
 - **Content Generation and Editing:** Agents can leverage tools like grammar checkers, text summarizers, or content safety evaluators to assist with content creation tasks.
 
+### Example: Google Workspace teaching assistant agent
+
+The tool use pattern is also a strong fit for educational workflows built on Google Workspace. A single agent can orchestrate multiple Google APIs as tools:
+
+- **Google Drive API** to discover student journals and create file-level comments.
+- **Google Docs API** to read and edit document content through `documents.batchUpdate`.
+- **Gmail API** to send lesson plans, reminders, and feedback notifications.
+- **Google Classroom API** (optional) to list submissions and attach teacher feedback when coursework is managed in Classroom.
+
+> Important: Docs API supports reliable reading/editing, but "true suggestion mode" (like UI track-changes suggestions) is limited. In practice, many implementations combine targeted document edits with comments for reviewer-style feedback.
+
+Recommended implementation architecture:
+
+1. **Automation layer (tools + orchestration):**
+   - Apps Script for a fast MVP inside Google Workspace, or
+   - External Python/Node service for stronger observability and scale.
+2. **Pedagogy layer (agent reasoning):**
+   - Rubric scoring (for example: insight, application, evidence, clarity),
+   - Structured feedback generation (for example: 2 strengths, 2 improvements, 1 next-step prompt),
+   - Approval workflow before sending comments/emails.
+
+This is a practical example of how tool use turns a model from a "chat interface" into a workflow agent that can read, reason, and take action across multiple systems.
+
 ## What are the elements/building blocks needed to implement the tool use design pattern?
 
 These building blocks allow the AI agent to perform a wide range of tasks. Let's look at the key elements needed to implement the Tool Use Design Pattern:
